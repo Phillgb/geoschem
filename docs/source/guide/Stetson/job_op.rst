@@ -31,9 +31,9 @@ already available as packaged modules in shared :ref:`packages libraries`.
 
 To load the desired packages in a session, the user need to execute the desired
 libraries as a source code. For most use cases, the necessary packages to execute 
-GEOS-Chem are present in the :file:`set-path-intel-gchp-conda-2022.0.2-intelmpi`
+GEOS-Chem are present in the :file:`set-path-gchp-intel-conda-2022.0.2-intelmpi`
 and can be loaded into a session via the following command 
-:code:`source /software/share/set-path-intel-gchp-conda-2022.0.2-intelmpi`.
+:code:`source /software/share/set-path-gchp-intel-conda-2022.0.2-intelmpi`.
 
 Scheduler
 ---------
