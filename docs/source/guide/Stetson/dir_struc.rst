@@ -12,6 +12,8 @@ Home Directory
     
     Home folder where you are greated when logging on Stetson.
 
+.. _Storage directory:
+
 Storage directory
 -----------------
 

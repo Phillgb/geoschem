@@ -33,12 +33,17 @@ of the Geos-Chem operation.
    
    guide/Gcc_TOMAS/geos-chem.rst
 
+.. toctree::
+   :caption: GCHP TOMAS user guide
+   :maxdepth: 2
+
+   guide/GCHP/gchp.rst
+
 Indices and tables
 ==================
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
 
 .. URL link reference
 .. _Geos-Chem wiki: https://geos-chem.readthedocs.io/en/stable/index.html
