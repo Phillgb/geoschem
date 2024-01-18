@@ -193,6 +193,52 @@ following expression.
     pmass = xr.DataArray([(4/3 * np.pi * (Dp1/2)**3) * mw for mw in molwgt],
                      dims= ['Species', 'Size bins'])
 
+Maps of the total mass concentrations across the globe can be made to represent 
+the spacial distribution of the total mass concentration of each **Tomas** aerosols
+species using the arrays produced earlier. The representation of the total mass 
+concentration on a map can be done with **Cartopy** using an approach very similar 
+to the creation of a normal scatter plot. The following code is showing an example 
+of a representation of the total mass concentration using a polar projection. 
 
+.. code-block:: Python
+
+    # Map boundaries parameters
+    theta = np.linspace(0, 2*np.pi, 100)
+    map_circle = mpath.Path(np.vstack([np.sin(theta), np.cos(theta)]).T * 0.5 + [.5, .5])
+
+    for i in range(dist.shape[0]-1):
+    for t in range (dist.shape[2]):
+        fig, axs = plt.subplots(figsize=(10, 6))
+
+        ax = fig.add_subplot(1, 1, 1, projection=ccrs.LambertAzimuthalEqualArea(
+        central_latitude=90))
+        ax.coastlines()
+        ax.set_global()
+
+        x = nc_file.corner_lons.isel(nf=face)
+        y = nc_file.corner_lats.isel(nf=face)
+        v = total_conc[i].isel(nf=face, time=t)
+        cmap = ax.pcolormesh(x, y, v,
+                                norm=LogNorm(vmin=1e-12,
+                                            vmax=5e-6),
+                                transform=ccrs.PlateCarree())
+    ax.set_title('Global total particles concentration at '+str(total_conc[i].time.values[t]))
+    ax.gridlines(draw_labels=True, linewidth=2, color='gray', alpha=0.5,
+                 linestyle='--')
+    ax.set_extent([-180, 180, 40, 90], crs=ccrs.PlateCarree())
+    ax.set_boundary(map_circle, transform=ax.transAxes)
+
+    fig.colorbar(cmap, orientation= 'horizontal', location='bottom', 
+                label= 'Total concentration (\u03BCg 'r'$m^{-3}$)', 
+                aspect=50, shrink=0.8, extend='both')
+    axs.axis('off')
+    fig.savefig(os.path.join(outdir, 
+                str(sdhead[i])+'_map'+str(dist[i].time.values[t]).replace(':', '')+'.png'), 
+                dpi=300, bbox_inches='tight')
+    plt.close()
+
+The code above is creating a single map of the total mass concentration for each
+timestep of the simulation in sequence. These individual maps can be combined in 
+a coesive .gif or video afterwards using third-party tools like **Imagick** on Linux.
 
 .. _original outputs description page: https://gchp.readthedocs.io/en/stable/user-guide/output_files.html
